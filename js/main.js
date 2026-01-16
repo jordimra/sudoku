@@ -11,6 +11,7 @@ import { solveNakedTriples } from './strategies/nakedTriples.js';
 import { solveNakedQuads } from './strategies/nakedQuads.js';
 import { solveXYWing } from './strategies/xyWing.js';
 import { solveXYZWing } from './strategies/xyzWing.js';
+import { solveWWing } from './strategies/wWing.js';
 import { solveSkyscraper } from './strategies/skyscraper.js';
 import { solveXWing } from './strategies/xWing.js';
 import { solveSwordfish } from './strategies/swordfish.js';
@@ -38,6 +39,7 @@ const strategies = [
     { name: "Rascacielos", fn: solveSkyscraper },
     { name: "XY-Wing", fn: solveXYWing },
     { name: "XYZ-Wing", fn: solveXYZWing },
+    { name: "W-Wing", fn: solveWWing },
     { name: "X-Wing", fn: solveXWing },
     { name: "Swordfish", fn: solveSwordfish },
     { name: "Unique Rectangle", fn: solveUniqueRectangle }
