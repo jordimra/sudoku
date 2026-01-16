@@ -21,7 +21,6 @@ export function solveNakedPairs(board, candidates) {
                         // Encontrada posible pareja. Verificamos si elimina algo.
                         const action = tryEliminate(candidates, candsA, cellsInUnit, [idxA, idxB], type, i);
                         if (action) {
-                            console.log(`💡 NAKED PAIR encontrado en ${type} ${i}:`, candsA);
                             return action;
                         }
                     }

@@ -46,14 +46,12 @@ export function solveNoteCleaner(board, currentCandidates) {
 
     if (modified) {
         if (isInitialization) {
-            console.log("✨ INICIO: Calculando candidatos iniciales.");
             return {
                 type: 'NOTES_UPDATE',
                 candidates: newCandidates,
                 reason: "Calculados candidatos iniciales"
             };
         } else {
-            console.log("🧹 LIMPIADOR: Se han eliminado notas imposibles.");
             return {
                 type: 'NOTES_UPDATE',
                 candidates: newCandidates,

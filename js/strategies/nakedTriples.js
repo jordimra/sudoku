@@ -30,7 +30,6 @@ export function solveNakedTriples(board, candidates) {
                             const values = [...union].sort((x,y)=>x-y);
                             const action = tryEliminate(candidates, values, cellsInUnit, [idxA, idxB, idxC], type, i);
                             if (action) {
-                                console.log(`💡 NAKED TRIPLE encontrado en ${type} ${i}:`, values);
                                 return action;
                             }
                         }
