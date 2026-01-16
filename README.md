@@ -47,7 +47,7 @@ Para una mejor experiencia con los módulos de JavaScript, usa una extensión co
 `python -m http.server 8000`
 
 ## 📂 Estructura del Proyecto
-
+```
 sudoku-master/
 ├── index.php              # Estructura HTML principal
 ├── style.css              # Estilos con CSS Grid y Media Queries
@@ -61,7 +61,7 @@ sudoku-master/
 │       ├── swordfish.js
 │       └── ... (otras estrategias)
 └── README.md              # Documentación
-
+```
 ## 🛠 Tecnologías
 
 * **HTML5:** Semántica y estructura.
