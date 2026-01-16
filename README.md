@@ -37,7 +37,7 @@ Este proyecto es una aplicación **Frontend**, por lo que no requiere instalaci�
 
 ### Opción 1: Ejecutar localmente
 1. Clona este repositorio:
-   `git clone https://github.com/jordimra/sudoku-master.git`
+   `git clone https://github.com/jordimra/sudoku`
 2. Navega a la carpeta del proyecto.
 3. Abre el archivo `index.php` (o `index.html`) en tu navegador favorito.
 
