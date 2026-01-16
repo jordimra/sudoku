@@ -1,0 +1,448 @@
+/* =========================================
+   1. VARIABLES Y CONFIGURACIÓN BASE
+   ========================================= */
+:root {
+    --cell-size: 42px;       /* Tamaño escritorio */
+    --label-size: 30px;
+    --border-thick: 3px solid #344861;
+    --border-thin: 1px solid #dcdcdc;
+    --label-color: #344861;
+    
+    /* COLORES DE ESTADO */
+    --highlight-val: #89CFF0; 
+    --highlight-note: #E0F7FA; 
+    --error-bg: #ff0000;      
+    --error-text: #ffffff;    
+    --won-bg: #d4edda;        
+    --won-border: #28a745;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f0f2f5;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.main-container {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    max-width: 950px;
+    width: 95%;
+    height: fit-content;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box; /* Importante para padding */
+}
+
+h1 { margin-top: 0; margin-bottom: 20px; color: #333; }
+
+/* =========================================
+   2. CONTROLES SUPERIORES (HEADER)
+   ========================================= */
+.top-controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Permite que bajen si no caben */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.control-group-game {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap; /* Responsivo */
+    justify-content: center;
+}
+
+.control-group-game label {
+    font-weight: bold;
+    color: #344861;
+    font-size: 15px;
+}
+
+#difficulty-selector {
+    padding: 7px 12px;
+    height: auto;
+    min-height: 36px;
+    border-radius: 4px;
+    border: 2px solid #007bff;
+    background-color: white;
+    cursor: pointer;
+}
+
+.control-group-file {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    background-color: #e3f2fd;
+    border: 1px solid #90caf9;
+    border-radius: 8px;
+    padding: 6px 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.file-buttons {
+    display: flex;
+    gap: 5px;
+    padding-right: 15px;
+    border-right: 1px solid #bbdefb;
+}
+
+.file-buttons button { margin: 0; font-size: 13px; padding: 6px 10px; }
+
+.file-options {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    font-size: 11px;
+    color: #0d47a1;
+}
+
+.file-options label {
+    cursor: pointer; display: flex; align-items: center; gap: 4px; user-select: none;
+}
+
+/* =========================================
+   3. ÁREA DE JUEGO
+   ========================================= */
+.game-area {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+/* Wrapper para Etiquetas + Tablero */
+.board-wrapper {
+    display: grid;
+    grid-template-columns: var(--label-size) max-content;
+    grid-template-rows: var(--label-size) max-content;
+    gap: 0;
+}
+
+.label-corner { grid-column: 1; grid-row: 1; }
+
+.col-labels {
+    grid-column: 2; grid-row: 1;
+    display: grid;
+    grid-template-columns: repeat(9, var(--cell-size));
+    font-weight: bold; color: var(--label-color);
+    align-items: flex-end; padding-bottom: 5px;
+    font-size: 14px; /* Ajustable en móvil */
+}
+
+.row-labels {
+    grid-column: 1; grid-row: 2;
+    display: grid;
+    grid-template-rows: repeat(9, var(--cell-size));
+    font-weight: bold; color: var(--label-color);
+    align-items: center; justify-content: flex-end; padding-right: 8px;
+    font-size: 14px;
+}
+
+/* TABLERO */
+.sudoku-board {
+    grid-column: 2; grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(9, var(--cell-size));
+    grid-template-rows: repeat(9, var(--cell-size));
+    border: var(--border-thick);
+    user-select: none;
+    transition: all 0.3s ease;
+    background-color: #344861; /* Fondo para las líneas de borde */
+    gap: 1px; /* Truco para bordes internos nítidos */
+    border: 3px solid #344861;
+}
+
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px; /* Ajustable en móvil */
+    cursor: pointer;
+    position: relative;
+    background: white;
+    box-sizing: border-box;
+}
+
+/* Bordes internos 3x3 usando márgenes en lugar de bordes para evitar doble grosor */
+/* Reiniciamos bordes estándar */
+.cell { border: none; }
+
+/* Aplicamos espaciado extra para las líneas gruesas */
+.cell:nth-child(3n) { margin-right: 2px; }
+.cell:nth-child(9n) { margin-right: 0; } /* Fin de fila */
+.cell:nth-child(n+19):nth-child(-n+27), 
+.cell:nth-child(n+46):nth-child(-n+54) { margin-bottom: 2px; }
+
+/* Para simplificar el diseño responsive, usamos un truco visual mejorado:
+   Volvemos al sistema de bordes clásico pero ajustado */
+.sudoku-board {
+    gap: 0;
+    background: transparent;
+}
+.cell {
+    border-right: 1px solid #dcdcdc;
+    border-bottom: 1px solid #dcdcdc;
+    margin: 0;
+}
+.cell[data-col="2"], .cell[data-col="5"] { border-right: 2px solid #344861; }
+.cell[data-row="2"], .cell[data-row="5"] { border-bottom: 2px solid #344861; }
+.cell[data-col="8"] { border-right: none; }
+.cell[data-row="8"] { border-bottom: none; }
+
+
+/* ESTADOS */
+.cell.initial { font-weight: 900; color: black; }
+.cell.solved { color: #0056b3; font-weight: 500; }
+
+/* Selección Animada */
+.cell.selected { background-color: #e8f0fe !important; }
+.cell.selected::after {
+    content: ""; position: absolute; top:0; left:0; right:0; bottom:0; z-index: 10;
+    background-image: 
+        linear-gradient(90deg, #007bff 50%, transparent 50%),
+        linear-gradient(90deg, #007bff 50%, transparent 50%),
+        linear-gradient(0deg, #007bff 50%, transparent 50%),
+        linear-gradient(0deg, #007bff 50%, transparent 50%);
+    background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+    background-size: 8px 2px, 8px 2px, 2px 8px, 2px 8px;
+    background-position: 0 0, 0 100%, 0 0, 100% 0;
+    animation: marching-ants 1s linear infinite;
+    pointer-events: none;
+}
+@keyframes marching-ants {
+    0% { background-position: 0 0, 0 100%, 0 0, 100% 0; }
+    100% { background-position: 16px 0, -16px 100%, 0 -16px, 100% 16px; }
+}
+
+.cell.highlight-val { background-color: var(--highlight-val) !important; color: black !important; }
+.cell.highlight-note { background-color: var(--highlight-note) !important; }
+.cell.error { background-color: var(--error-bg) !important; color: var(--error-text) !important; font-weight: bold; }
+
+.sudoku-board.game-won { border-color: var(--won-border); box-shadow: 0 0 20px rgba(40, 167, 69, 0.6); }
+.sudoku-board.game-won .cell { background-color: var(--won-bg) !important; color: #155724 !important; cursor: default; }
+
+.cell .notes {
+    position: absolute; top:0; left:0; width:100%; height:100%;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    pointer-events: none; z-index: 5;
+}
+.note-item { font-size: 9px; display: flex; justify-content: center; align-items: center; color: #555; }
+
+/* SIDEBAR */
+.sidebar {
+    width: 250px;
+    min-width: 250px;
+    height: 410px; 
+    border: 2px solid #ccc;
+    display: flex; flex-direction: column;
+    background: #fafafa;
+}
+.sidebar-header { background: #344861; color: white; padding: 10px; font-weight: bold; }
+#sudoku-history-log { flex-grow: 1; overflow-y: auto; padding: 10px; text-align: left; font-size: 12px; }
+.sidebar-footer { padding: 10px; border-top: 1px solid #ccc; background: #eee; }
+#btn-undo { width: 100%; margin: 0; }
+
+.history-item { margin-bottom: 8px; padding: 6px; border-left: 3px solid #ccc; background: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.history-item strong { display: block; color: #333; margin-bottom: 2px; }
+
+/* =========================================
+   4. ZONAS INFERIORES Y BOTONES
+   ========================================= */
+.resolution-area {
+    display: flex; justify-content: center; align-items: center; gap: 10px;
+    width: 100%; margin-bottom: 20px; padding: 10px;
+    background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px;
+    flex-wrap: wrap; /* Permitir wrap */
+}
+.zone-label { font-size: 13px; font-weight: bold; color: #6c757d; text-transform: uppercase; }
+.btn-solve { background-color: #6610f2; }
+.btn-solve:hover { background-color: #520dc2; }
+
+.bottom-area {
+    display: flex; justify-content: center; align-items: center; 
+    gap: 20px; width: 100%; flex-wrap: wrap;
+}
+
+.tools-left { display: flex; flex-direction: column; }
+#btn-notes { height: 100%; min-height: 45px; font-weight: bold; border: 2px solid #007bff; background: white; color: #007bff; }
+#btn-notes.active { background: #28a745; color: white; border-color: #28a745; }
+
+.numpad { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+.numpad button { width: 35px; height: 40px; font-size: 16px; padding: 0; }
+.btn-delete { width: auto !important; padding: 0 12px !important; background-color: #dc3545; }
+.btn-delete:hover { background-color: #c82333; }
+
+button { padding: 8px 12px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; transition: 0.2s; white-space: nowrap; }
+button:hover { background: #0056b3; }
+.btn-warning { background: #ffc107; color: black; font-weight: bold; }
+button:disabled { background-color: #cccccc !important; color: #666666 !important; cursor: not-allowed; opacity: 0.7; }
+
+/* =========================================
+   5. MEDIA QUERIES (DISEÑO FINAL)
+   ========================================= */
+
+/* --- TABLETS Y ESCRITORIOS PEQUEÑOS (950px o menos) --- */
+@media (max-width: 950px) {
+    .game-area { flex-direction: column; align-items: center; }
+    .sidebar { width: 100%; max-width: 450px; height: 150px; margin-top: 10px; }
+    .control-group-file { width: 100%; justify-content: center; }
+}
+
+/* --- MÓVIL PORTRAIT (VERTICAL) - (INTACTO, COMO TE GUSTA) --- */
+@media (max-width: 600px) and (orientation: portrait) {
+    :root { --cell-size: 34px; --label-size: 15px; }
+    body { padding: 5px; }
+    h1 { font-size: 22px; margin-bottom: 5px; }
+    .game-area, .bottom-area { display: contents; }
+    .main-container {
+        display: flex; flex-direction: column;
+        padding: 10px 5px; width: 100%; box-shadow: none;
+    }
+    /* 1. Header */
+    .top-controls { order: 1; gap: 8px; flex-direction: column; margin-bottom: 10px; }
+    .control-group-game { width: 98%; justify-content: center; gap: 5px; }
+    .control-group-game label { display: none; }
+    .control-group-file { width: 98%; padding: 5px; justify-content: center; margin: 0 auto; }
+    .file-buttons { border: none; padding: 0; width: 100%; justify-content: center; }
+    /* 2. Tablero */
+    .board-wrapper { order: 2; margin-bottom: 10px; justify-self: center; }
+    /* 3. Números */
+    .numpad { 
+        order: 3; width: 100%; margin-bottom: 10px;
+        display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; 
+    }
+    .btn-delete { grid-column: auto !important; background-color: #dc3545; color: white; }
+    .numpad button { height: 45px; font-size: 20px; width: 100%; }
+    .tools-left { order: 3; width: 100%; margin-bottom: 5px; }
+    #btn-notes { height: 35px; font-size: 14px; }
+    /* 4. Ayudas */
+    .resolution-area { order: 4; width: 100%; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+    .resolution-area button { width: 100%; padding: 12px; }
+    /* 5. Historial */
+    .sidebar { order: 5; width: 100%; height: 200px; margin-top: 0; }
+}
+
+/* --- MÓVIL LANDSCAPE (HORIZONTAL) - (CORREGIDO) --- */
+@media (max-height: 500px) and (orientation: landscape) {
+    :root {
+        --cell-size: 26px; /* Tablero compacto */
+        --label-size: 15px;
+    }
+
+    body { padding: 0; }
+    h1 { display: none; } 
+
+    .main-container {
+        display: grid;
+        /* Dos columnas: Tablero | Panel Derecho */
+        grid-template-columns: min-content 250px; 
+        grid-template-areas:
+            "header header"
+            "board right-panel"
+            "help history"; 
+        gap: 15px; /* Espacio horizontal sano */
+        padding: 5px 15px;
+        width: 100%; max-width: none;
+        align-items: start; justify-content: center;
+        box-shadow: none;
+    }
+
+    .game-area { display: contents; }
+    
+    /* 1. HEADER (ARREGLADO: UNA SOLA LÍNEA, TODO VISIBLE) */
+    .top-controls { 
+        grid-area: header; 
+        flex-direction: row; 
+        flex-wrap: nowrap; /* Impide que se apilen */
+        gap: 15px;
+        margin-bottom: 5px;
+        justify-content: center;
+        width: 100%;
+    }
+    
+    /* Grupo Juego: Forzamos fila */
+    .control-group-game { 
+        margin: 0; padding: 0; gap: 5px; 
+        border: none; background: transparent; box-shadow: none;
+        flex-direction: row !important; /* IMPORTANTE: Fuerza horizontal */
+        width: auto;
+    }
+    .control-group-game label { display: none; }
+    #difficulty-selector { width: 90px; } /* Un poco más pequeño para asegurar espacio */
+    
+    /* Grupo Archivo: Hacemos visibles las opciones */
+    .control-group-file { 
+        display: flex !important;
+        flex-direction: row;
+        width: auto;
+        padding: 2px 8px; margin: 0; gap: 8px;
+    }
+    .file-buttons { border-right: 1px solid #ccc; padding-right: 8px; margin-right: 0; width: auto; }
+    .file-options { display: flex !important; } /* AHORA VISIBLES */
+
+    /* 2. TABLERO (Izquierda) */
+    .board-wrapper { grid-area: board; justify-self: end; margin: 0; }
+    .col-labels { font-size: 9px; padding-bottom: 0; }
+    .row-labels { font-size: 9px; padding-right: 2px; }
+    .cell { font-size: 13px; }
+
+    /* 3. PANEL DERECHO (Números alineados) */
+    .bottom-area {
+        grid-area: right-panel;
+        display: flex; flex-direction: column;
+        justify-content: flex-start;
+        gap: 5px;
+        width: 100%;
+        margin: 0; margin-top: 18px; /* Alinear visualmente con top del tablero */
+    }
+    .tools-left { width: 100%; flex-shrink: 0; }
+    #btn-notes { height: 28px; min-height: 0; font-size: 11px; margin-bottom: 2px; }
+    
+    /* NUMPAD 3 COLUMNAS */
+    .numpad {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; width: 100%;
+    }
+    .numpad button { width: 100%; height: 36px; font-size: 16px; margin: 0; }
+    .btn-delete { grid-column: span 3 !important; background-color: #dc3545; color: white; font-weight: bold; }
+
+    /* 4. AYUDAS (Debajo del tablero) - SIN MARGEN GIGANTE */
+    .resolution-area {
+        grid-area: help;
+        justify-self: end;
+        margin-top: 10px; /* Margen pequeño normal */
+        flex-direction: row; flex-wrap: wrap;
+        width: 100%; max-width: 300px;
+        gap: 5px;
+    }
+    .resolution-area .zone-label { display: none; }
+    .resolution-area button { flex: 1 1 30%; padding: 8px; font-size: 11px; }
+
+    /* 5. HISTORIAL (Debajo de los números) - SIN MARGEN GIGANTE */
+    .sidebar {
+        grid-area: history;
+        display: flex !important;
+        width: 100%; height: 120px; /* Un poco más bajito */
+        margin-top: 10px; /* Margen pequeño normal */
+    }
+}
