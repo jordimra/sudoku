@@ -23,8 +23,9 @@ El núcleo del proyecto es un algoritmo híbrido capaz de resolver niveles "Ultr
 **Estrategias implementadas:**
 - [x] **Básicas:** Naked/Hidden Singles.
 - [x] **Intermedias:** Naked Pairs/Triples/Quads, Hidden Pairs/Triples/Quads, Intersection Removal (incluye Box Line Reduction).
-- [x] **Avanzadas:** X-Wing, XY-Wing, XYZ-Wing, W-Wing.
+- [x] **Avanzadas:** X-Wing, XY-Wing, XYZ-Wing, W-Wing, Simple Colors.
 - [x] **Expertas:** Swordfish, Jellyfish, Finned/Sashimi Fish, Skyscraper, Empty Rectangle, Sue de Coq, Unique Rectangles (Tipos 1,2,4), BUG+1.
+- [x] **Maestras (Cadenas):** Forcing Chains (cubre universalmente X-Cycles, AIC y 3D Medusa).
 - [x] **Backtracking:** Para generación de tableros y validación instantánea.
 
 ### 💾 Persistencia de Datos

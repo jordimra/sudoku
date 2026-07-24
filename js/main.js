@@ -23,6 +23,8 @@ import { solveUniqueRectangle } from './strategies/uniqueRectangle.js';
 import { solveBugPlusOne } from './strategies/bugPlusOne.js';
 import { solveEmptyRectangle } from './strategies/emptyRectangle.js';
 import { solveSueDeCoq } from './strategies/sueDeCoq.js';
+import { solveSimpleColors } from './strategies/simpleColors.js';
+import { solveForcingChains } from './strategies/forcingChains.js';
 import { solveBacktracking, hasUniqueSolution } from './strategies/backtracking.js';
 
 // --- ESTADO ---
@@ -55,8 +57,10 @@ const strategies = [
     { name: "Finned Fish", fn: solveFinnedFish },
     { name: "Empty Rectangle", fn: solveEmptyRectangle },
     { name: "Sue de Coq", fn: solveSueDeCoq },
+    { name: "Simple Colors", fn: solveSimpleColors },
     { name: "Unique Rectangle", fn: solveUniqueRectangle },
-    { name: "BUG+1", fn: solveBugPlusOne }
+    { name: "BUG+1", fn: solveBugPlusOne },
+    { name: "Forcing Chains", fn: solveForcingChains }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
