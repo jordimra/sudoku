@@ -21,6 +21,8 @@ import { solveJellyfish } from './strategies/jellyfish.js';
 import { solveFinnedFish } from './strategies/finnedFish.js';
 import { solveUniqueRectangle } from './strategies/uniqueRectangle.js';
 import { solveBugPlusOne } from './strategies/bugPlusOne.js';
+import { solveEmptyRectangle } from './strategies/emptyRectangle.js';
+import { solveSueDeCoq } from './strategies/sueDeCoq.js';
 import { solveBacktracking, hasUniqueSolution } from './strategies/backtracking.js';
 
 // --- ESTADO ---
@@ -51,6 +53,8 @@ const strategies = [
     { name: "Swordfish", fn: solveSwordfish },
     { name: "Jellyfish", fn: solveJellyfish },
     { name: "Finned Fish", fn: solveFinnedFish },
+    { name: "Empty Rectangle", fn: solveEmptyRectangle },
+    { name: "Sue de Coq", fn: solveSueDeCoq },
     { name: "Unique Rectangle", fn: solveUniqueRectangle },
     { name: "BUG+1", fn: solveBugPlusOne }
 ];
