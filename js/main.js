@@ -20,6 +20,7 @@ import { solveSwordfish } from './strategies/swordfish.js';
 import { solveJellyfish } from './strategies/jellyfish.js';
 import { solveFinnedFish } from './strategies/finnedFish.js';
 import { solveUniqueRectangle } from './strategies/uniqueRectangle.js';
+import { solveBugPlusOne } from './strategies/bugPlusOne.js';
 import { solveBacktracking, hasUniqueSolution } from './strategies/backtracking.js';
 
 // --- ESTADO ---
@@ -50,7 +51,8 @@ const strategies = [
     { name: "Swordfish", fn: solveSwordfish },
     { name: "Jellyfish", fn: solveJellyfish },
     { name: "Finned Fish", fn: solveFinnedFish },
-    { name: "Unique Rectangle", fn: solveUniqueRectangle }
+    { name: "Unique Rectangle", fn: solveUniqueRectangle },
+    { name: "BUG+1", fn: solveBugPlusOne }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
