@@ -8,7 +8,9 @@ import { solveIntersectionRemoval } from './strategies/intersectionRemoval.js';
 import { solveNakedPairs } from './strategies/nakedPairs.js';
 import { solveHiddenPairs } from './strategies/hiddenPairs.js';
 import { solveNakedTriples } from './strategies/nakedTriples.js';
+import { solveHiddenTriples } from './strategies/hiddenTriples.js';
 import { solveNakedQuads } from './strategies/nakedQuads.js';
+import { solveHiddenQuads } from './strategies/hiddenQuads.js';
 import { solveXYWing } from './strategies/xyWing.js';
 import { solveXYZWing } from './strategies/xyzWing.js';
 import { solveWWing } from './strategies/wWing.js';
@@ -35,7 +37,9 @@ const strategies = [
     { name: "Naked Pair", fn: solveNakedPairs },
     { name: "Hidden Pair", fn: solveHiddenPairs },
     { name: "Naked Triple", fn: solveNakedTriples },
+    { name: "Hidden Triple", fn: solveHiddenTriples },
     { name: "Naked Quad", fn: solveNakedQuads },
+    { name: "Hidden Quad", fn: solveHiddenQuads },
     { name: "Rascacielos", fn: solveSkyscraper },
     { name: "XY-Wing", fn: solveXYWing },
     { name: "XYZ-Wing", fn: solveXYZWing },
