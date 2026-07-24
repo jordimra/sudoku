@@ -17,6 +17,8 @@ import { solveWWing } from './strategies/wWing.js';
 import { solveSkyscraper } from './strategies/skyscraper.js';
 import { solveXWing } from './strategies/xWing.js';
 import { solveSwordfish } from './strategies/swordfish.js';
+import { solveJellyfish } from './strategies/jellyfish.js';
+import { solveFinnedFish } from './strategies/finnedFish.js';
 import { solveUniqueRectangle } from './strategies/uniqueRectangle.js';
 import { solveBacktracking, hasUniqueSolution } from './strategies/backtracking.js';
 
@@ -46,6 +48,8 @@ const strategies = [
     { name: "W-Wing", fn: solveWWing },
     { name: "X-Wing", fn: solveXWing },
     { name: "Swordfish", fn: solveSwordfish },
+    { name: "Jellyfish", fn: solveJellyfish },
+    { name: "Finned Fish", fn: solveFinnedFish },
     { name: "Unique Rectangle", fn: solveUniqueRectangle }
 ];
 
